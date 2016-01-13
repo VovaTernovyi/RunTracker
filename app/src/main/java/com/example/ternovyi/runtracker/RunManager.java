@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 
-/**
- * Created by vova on 12.01.16.
- */
 public class RunManager {
 
     private static final String TAG = "RunManager";
@@ -38,7 +35,6 @@ public class RunManager {
 
     public void startLocationUpdates() {
         String provider = LocationManager.GPS_PROVIDER;
-
         // Отримання останнього відомого місцезнаходження і його розсилка (якщо дані доступні).
         Location lastKnown = mLocationManager.getLastKnownLocation(provider);
         if (lastKnown != null) {
