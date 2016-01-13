@@ -7,9 +7,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
 
-/**
- * Created by vova on 12.01.16.
- */
 public class LocationReceiver extends BroadcastReceiver {
 
     private static final String TAG = "LocationReceiver";
@@ -17,13 +14,13 @@ public class LocationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Якщо є доповнення Location, виокористовувати його
-        Location loc = (Location)intent
+        Location loc = intent
                 .getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
         if (loc != null) {
             onLocationReceived(context, loc);
             return;
         }
-        // Якщоми попали в цю точку, сталось щось інше
+        // Якщо ми попали в цю точку, сталось щось інше
         if (intent.hasExtra(LocationManager.KEY_PROVIDER_ENABLED)) {
             boolean enabled = intent
                     .getBooleanExtra(LocationManager.KEY_PROVIDER_ENABLED, false);
