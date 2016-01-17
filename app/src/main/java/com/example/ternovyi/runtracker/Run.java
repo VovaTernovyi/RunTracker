@@ -19,7 +19,7 @@ public class Run {
 
     public Run() {
         mId = -1;
-        mStartDate = new Date(1);
+        mStartDate = new Date();
     }
 
     public Date getStartDate() {

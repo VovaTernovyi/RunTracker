@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
+import com.example.ternovyi.runtracker.RunDatabaseHelper.RunCursor;
 
 public class RunManager {
 
@@ -72,7 +73,7 @@ public class RunManager {
         }
     }
 
-    public boolean isTrackingRun() {
+    public boolean isTrackingRun(Run run) { //? arguments
         return getLocationPendingIntent(false) != null;
     }
 
@@ -102,11 +103,36 @@ public class RunManager {
         return run;
     }
 
+    public RunCursor queryRuns() {
+        return mHelper.queryRuns();
+    }
+
     public void insertLocation(Location loc) {
         if (mCurrentRunId != -1) {
             mHelper.insertLocation(mCurrentRunId, loc);
         } else {
             Log.e(TAG, "Location received with no tracking run; ignoring.");
         }
+    }
+
+    public Run getRun(long id) {
+        Run run = null;
+        RunCursor cursor = mHelper.queryRun(id);
+        cursor.moveToFirst();
+        if (!cursor.isAfterLast())
+            run = cursor.getRun();
+        cursor.close();
+        return run;
+    }
+
+    public Location getLastLocationForRun(long runId) {
+        Location location = null;
+        RunDatabaseHelper.LocationCursor cursor = mHelper.queryLastLocationForRun(runId);
+        cursor.moveToFirst();
+
+        if (!cursor.isAfterLast())
+            location = cursor.getLocation();
+        cursor.close();
+        return location;
     }
 }
